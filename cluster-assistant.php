@@ -21,18 +21,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'Cluster_Assistant' ) ) :
 	/**
+	 * Crux Assistant.
 	 *
 	 * @since 1.0
 	 */
 	class Cluster_Assistant {
 
 		/**
+		 * Class instance.
 		 *
 		 * @since 1.0
 		 */
 		private static $instance;
 
 		/**
+		 * Register method to crate a new instance.
 		 *
 		 * @since 1.0
 		 */
@@ -46,6 +49,7 @@ if ( ! class_exists( 'Cluster_Assistant' ) ) :
 		}
 
 		/**
+		 * Init method.
 		 *
 		 * @since 1.0
 		 */
@@ -54,6 +58,7 @@ if ( ! class_exists( 'Cluster_Assistant' ) ) :
 		}
 
 		/**
+		 * Defines constants.
 		 *
 		 * @since 1.0
 		 */
@@ -65,6 +70,7 @@ if ( ! class_exists( 'Cluster_Assistant' ) ) :
 		}
 
 		/**
+		 * Imethod to define a constant.
 		 *
 		 * @param string $name
 		 * @param string $value
@@ -77,10 +83,12 @@ if ( ! class_exists( 'Cluster_Assistant' ) ) :
 		}
 
 		/**
+		 * Includes plugin files.
 		 *
 		 * @since 1.0
 		 */
 		public function includes() {
+			require_once CA_PLUGIN_PATH . 'includes/class-widgetized-pages.php';
 			require_once CA_PLUGIN_PATH . 'includes/widgets/widget-clients.php';
 			require_once CA_PLUGIN_PATH . 'includes/widgets/widget-latest-post.php';
 			require_once CA_PLUGIN_PATH . 'includes/widgets/widget-portfolio.php';
@@ -88,14 +96,13 @@ if ( ! class_exists( 'Cluster_Assistant' ) ) :
 			require_once CA_PLUGIN_PATH . 'includes/widgets/widget-services-section.php';
 			require_once CA_PLUGIN_PATH . 'includes/widgets/widget-static-content.php';
 			require_once CA_PLUGIN_PATH . 'includes/widgets/widget-featured-portfolio.php';
-
-			require_once CA_PLUGIN_PATH . 'includes/updater/updater.php';
 		}
 	}
 endif;
 
 
 /**
+ * Invokes Cluster_Assistant Class.
  *
  * @since 1.0
  */
@@ -104,6 +111,7 @@ function cluster_assistant() {
 }
 
 /**
+ * Activation notice.
  *
  * @since 1.0
  */
@@ -114,19 +122,22 @@ function cluster_assistant_activation_notice() {
 }
 
 /**
- *
+ * Assistant activation check.
  *
  * @since 1.0
  */
 function cluster_assistant_activation_check() {
 	$theme = wp_get_theme(); // gets the current theme
-	if ( 'Cluster' == $theme->name || 'Cluster' == $theme->parent_theme ) {
+	if ( 'Cluster' === $theme->name || 'Cluster' === $theme->parent_theme ) {
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			add_action( 'after_setup_theme', 'cluster_assistant' );
 		} else {
 			cluster_assistant();
 		}
 	} else {
+		if ( ! function_exists( 'deactivate_plugins' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 		add_action( 'admin_notices', 'cluster_assistant_activation_notice' );
 	}
