@@ -88,6 +88,7 @@ if ( ! class_exists( 'Cluster_Assistant' ) ) :
 		 * @since 1.0
 		 */
 		public function includes() {
+			// Widgets.
 			require_once CA_PLUGIN_PATH . 'includes/class-widgetized-pages.php';
 			require_once CA_PLUGIN_PATH . 'includes/widgets/widget-clients.php';
 			require_once CA_PLUGIN_PATH . 'includes/widgets/widget-latest-post.php';
@@ -96,6 +97,20 @@ if ( ! class_exists( 'Cluster_Assistant' ) ) :
 			require_once CA_PLUGIN_PATH . 'includes/widgets/widget-services-section.php';
 			require_once CA_PLUGIN_PATH . 'includes/widgets/widget-static-content.php';
 			require_once CA_PLUGIN_PATH . 'includes/widgets/widget-featured-portfolio.php';
+
+			// Shortcodes.
+			require_once CA_PLUGIN_PATH . 'includes/shortcodes/theme-shortcodes.php';
+			require_once CA_PLUGIN_PATH . 'includes/shortcodes/contact-form.php';
+
+			// Metaboxes.
+			require_once CA_PLUGIN_PATH . 'includes/meta/stag-admin-metaboxes.php';
+			if ( false === get_theme_mod( 'general_disable_seo_settings', false ) ) {
+				require_once CA_PLUGIN_PATH . 'includes/meta/seo-meta.php';
+			}
+			require_once CA_PLUGIN_PATH . 'includes/meta/portfolio-meta.php';
+			require_once CA_PLUGIN_PATH . 'includes/meta/page-meta.php';
+			require_once CA_PLUGIN_PATH . 'includes/meta/post-meta.php';
+
 		}
 	}
 endif;
